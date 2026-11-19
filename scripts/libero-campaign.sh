@@ -11,6 +11,6 @@ export PYTHONDONTWRITEBYTECODE=1
 mkdir -p "$output"
 for suite in "$@"; do
     .venv/bin/python -m mxf.eval --engine motrixsim --suite "$suite" --scenes "$scenes/$suite" \
-        --tasks {0..9} --episodes 50 --gpu "$gpu" --compact --no-video --output "$output/$suite" \
+        --tasks {0..9} --episodes 50 --episodes-per-process "${MXF_EPISODES_PER_PROCESS:-3}" --gpu "$gpu" --compact --no-video --output "$output/$suite" \
         > "$output/$suite.log" 2>&1
 done

@@ -210,6 +210,7 @@ def collect(scored, scenes, reference):
             "max_steps": horizon,
             "native_result_sha256": native_digest,
             "motrixsim_version": run["engine_version"],
+            "episodes_per_simulation_process": run.get("episodes_per_process"),
             "weights_sha256": run["weights_sha256"],
         }
     require(len(episodes) == 2000, "Incomplete campaign")

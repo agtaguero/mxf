@@ -62,3 +62,22 @@
 动力学剩余偏差包括接触流形的点数和冲量分配、摩擦约束离散与 SDK 的浮点精度。2 ms 时闭环或固定动作仍可随时间分叉。补偿施加在 MotrixSim 的关节与刚体接口，运行评测时由其社区版后端积分与求解；MuJoCo 用于导出和独立对照。
 
 参考实现：[MuJoCo 接触材质混合](https://github.com/google-deepmind/mujoco/blob/2.3.7/src/engine/engine_collision_driver.c#L917) · [约束时间常数](https://github.com/google-deepmind/mujoco/blob/2.3.7/src/engine/engine_core_constraint.c) · [介质力](https://github.com/google-deepmind/mujoco/blob/2.3.7/src/engine/engine_passive.c) · [渲染纹理坐标](https://github.com/google-deepmind/mujoco/blob/2.3.7/src/render/render_gl3.c)。历史对照的版本范围和详细记录见[实验沿革](validation-history.md)。
+
+
+## 内存修复后的真实 π0.5 闭环
+
+11 月 19 日在 MotrixSim 社区版上独立运行 Spatial 任务 07（从灶台取黑碗放到盘里），使用官方初态 00–11、冻结 π0.5、真实双相机图像、完整 220 步上限。策略种子 7，环境种子 0。专用试跑从自己的策略随机流起点开始。全量套件另从任务 00、初态 00 开始，单独计分。
+
+| 试跑指标 | 结果 |
+|---|---:|
+| 任务成功 | 11/12（91.7%） |
+| 达到动作上限 | 1/12（初态 01） |
+| 执行异常 | 0 |
+| 策略进程 / 策略复位 / 前向调用 | 1 / 12 / 318 |
+| 评分动作 | 1,565 |
+| 仿真进程退出 | 4 批，每批 3 例 |
+| 作业整体内存峰值（内核 cgroup 计数，含文件缓存） | 15.89 GiB |
+| 采样到的作业交换峰值 | 0 GiB |
+| 采样到的主机最低可用内存 | 44.53 GiB |
+
+第 6、9、12 例写出后，在未观察到存活仿真子进程的采样中，作业匿名内存最低分别为 3.41、3.30、3.30 GiB。四个短生命周期仿真进程的峰值常驻内存均在 1.61–1.67 GiB 之间。工作站一次只运行一个套件，策略推理使用 GPU 1，作业内存软阈值 24 GiB、硬上限 32 GiB。数值适用于本轮 12 例；完整四套件另行统计。

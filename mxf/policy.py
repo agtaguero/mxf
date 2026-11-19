@@ -60,8 +60,8 @@ def policy_worker(platform, manifest, instructions, seed, output, gpu, *, rng_so
         "instructions": instructions,
         "seed": seed,
     }
-    module = "local_platform.vla.libero_metric_worker"
-    python_path = str(platform)
+    module = "mxf.policy_worker"
+    python_path = os.pathsep.join((str(Path(__file__).resolve().parents[1]), str(platform)))
     identity_metadata = {"model_manifest_sha256": config["model_manifest_sha256"],
                          "weights_sha256": model["weights_sha256"]}
     if rng_source is not None:
@@ -70,7 +70,6 @@ def policy_worker(platform, manifest, instructions, seed, output, gpu, *, rng_so
             {**identity_metadata, "seed": seed},
         )
         module = "mxf.policy_replay_worker"
-        python_path = os.pathsep.join((str(Path(__file__).resolve().parents[1]), python_path))
         identity_metadata["policy_rng_source"] = str(rng_source)
     encoded = json.dumps(config).encode()
     identity = hashlib.sha256(encoded).hexdigest()

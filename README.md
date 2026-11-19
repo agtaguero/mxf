@@ -24,11 +24,10 @@ for suite in libero_spatial libero_object libero_goal libero_10; do
 done
 ```
 
-两条运行命令可在两块 GPU 上分别启动；在第一条至少完成一例后启动第二条可减少加载权重时的内存竞争。单 GPU 机器可把四个套件顺序传给同一次调用。每个套件内严格按任务、初态、动作顺序使用同一条策略随机流。关闭录像仍会真实渲染策略需要的图像。
+共享工作站上可先顺序运行套件。独立套件并行时应先测量主机可用内存；错峰加载模型可减少启动峰值。单 GPU 机器可把四个套件顺序传给同一次调用。每个套件内严格按任务、初态、动作顺序使用同一条策略随机流。默认每 3 个回合退出一次仿真与图形进程，使操作系统回收原生分配；`MXF_EPISODES_PER_PROCESS` 可调整批大小。π0.5 进程、推理队列和受序号校验的策略连接贯穿整个套件。关闭录像仍会真实渲染策略需要的图像。
 
 ```bash
-bash scripts/libero-campaign.sh "$work/scenes" "$work/scored" 0 libero_10 libero_object
-bash scripts/libero-campaign.sh "$work/scenes" "$work/scored" 1 libero_spatial libero_goal
+bash scripts/libero-campaign.sh "$work/scenes" "$work/scored" 1 libero_object libero_spatial libero_goal libero_10
 ```
 
 在四套件都结束后，将 2,000 个结果逐例与原生参考核对，向新的目录发布正式结果。

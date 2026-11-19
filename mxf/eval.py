@@ -176,7 +176,7 @@ def run_reference(args):
 
 def run_motrix(args):
     from .assets import prepare_scene
-    from .motrix import ASSET_WARMUP_SECONDS, CameraStartupError, MotrixEnv
+    from .motrix import ASSET_WARMUP_SECONDS
 
     source_path = args.scenes / "run.json"
     source_suite = json.loads(source_path.read_text())["suite"] if source_path.exists() else "libero_spatial"
@@ -206,6 +206,7 @@ def run_motrix(args):
             "mode": "reference_action_replay" if args.replay else "closed_loop",
             "physics_dt": 0.002, "control_hz": 20, "warmup_steps": 10, "compact": args.compact,
             "episodes": args.episodes, "max_steps": args.max_steps,
+            "episodes_per_process": args.episodes_per_process,
             "environment_seed": ENV_SEED, "policy_seed": POLICY_SEED, **model,
         })
         if args.compact:
@@ -225,61 +226,119 @@ def run_motrix(args):
                                      inertia_groups=not args.legacy_inertia)
             if client:
                 client.call("select_task", index)
-            for case in range(args.episodes):
-                case_output = task_output / f"state-{case:02}"
-                case_output.mkdir()
-                source = scene / case_output.name
-                state = json.loads(wait_for_scene(
-                    source / "initial-state.json", args.wait_for_scenes).read_text())
-                layout = state["fixtures"]
-                identities = {"initial_state_sha256": state["initial_state_sha256"],
-                              "fixtures_sha256": fixture_sha256(layout)}
-                try:
-                    if identities["fixtures_sha256"] != state["fixtures_sha256"]:
-                        raise ValueError("Fixture layout differs from the original export")
-                    for attempt in range(3):
-                        env = None
-                        try:
-                            env = MotrixEnv(scene, template, case_output, layout,
-                                            camera_enabled=not (args.replay and args.no_video),
-                                            physics_solver=args.motrix_solver)
-                            obs = env.set_init_state(state["joints"], state.get("osc_reset"), legacy=args.legacy_osc_reset)
-                        except BaseException as error:
-                            if env is not None:
-                                env.close()
-                            if not isinstance(error, CameraStartupError) or attempt == 2:
-                                raise
-                            print(f"Task {index} state {case}: retrying renderer before inference ({error})",
-                                  flush=True)
-                            time.sleep(2 ** attempt)
-                        else:
-                            break
-                    try:
-                        if client:
-                            if args.policy_rng_source is None:
-                                client.call("reset")
-                            else:
-                                client.call("reset", int(index), case)
-                            result = rollout(env, client, obs, args.max_steps,
-                                             case_output, not args.no_video, compact=args.compact)
-                        else:
-                            result = replay_actions(env, source, case_output, not args.no_video)
-                    finally:
-                        env.close()
-                except BaseException as error:
-                    write_json(case_output / "result.json",
-                               {"termination": "error", "error": str(error), **identities})
-                    raise
-                result["osc_reset_source"] = env.osc_reset_source
-                if hasattr(env, "camera_asset_warmup_seconds"):
-                    result["camera_asset_warmup_seconds"] = env.camera_asset_warmup_seconds
-                    result["camera_startup_retries"] = attempt
-                write_json(case_output / "result.json", {**result, **identities})
-                print(f"Task {index} state {case}: {result['termination']} "
-                      f"at step {result['steps']}", flush=True)
+            for first in range(0, args.episodes, args.episodes_per_process):
+                batch = range(first, min(first + args.episodes_per_process, args.episodes))
+                run_episode_process(args, index, scene, task_output, template, batch, client)
 
         if client and args.policy_rng_source is None:
             write_json(args.output / "policy-summary.json", client.call("summary"))
+
+
+def run_episode_process(args, index, scene, output, template, cases, client):
+    """Release all native renderer allocations at each batch boundary."""
+    import multiprocessing
+    import random
+    import numpy as np
+
+    context = multiprocessing.get_context("spawn")
+    receiver, sender = context.Pipe(duplex=False)
+    process = context.Process(target=episode_process,
+                              args=(args, index, scene, output, template, cases, client,
+                                    client.connection.gettimeout() if client is not None else None,
+                                    random.getstate(), np.random.get_state(), sender))
+    try:
+        process.start()
+        # Only the child uses the shared, already-connected policy socket until
+        # it exits. There is one policy process and one sequence for the suite.
+        sender.close()
+        try:
+            sequence, python_state, numpy_state = receiver.recv()
+        except EOFError:
+            process.join()
+            raise RuntimeError(f"Simulation process failed for task {index}, cases {cases}, "
+                               f"exit code {process.exitcode}") from None
+        process.join()
+        if process.exitcode:
+            raise RuntimeError(f"Simulation process exited with {process.exitcode}")
+        if client is not None:
+            client.sequence = sequence
+        random.setstate(python_state)
+        np.random.set_state(numpy_state)
+    finally:
+        receiver.close()
+        sender.close()
+        if process.pid is not None and process.is_alive():
+            process.terminate()
+            process.join()
+        process.close()
+
+
+def episode_process(args, index, scene, task_output, template, cases, client, timeout, python_state, numpy_state, sender):
+    import random
+    import numpy as np
+    from .motrix import CameraStartupError, MotrixEnv
+
+    if client is not None:
+        # Spawn duplicates the descriptor, but not Python's socket timeout metadata.
+        client.connection.settimeout(timeout)
+    random.setstate(python_state)
+    np.random.set_state(numpy_state)
+    for case in cases:
+        case_output = task_output / f"state-{case:02}"
+        case_output.mkdir()
+        source = scene / case_output.name
+        state = json.loads(wait_for_scene(
+            source / "initial-state.json", args.wait_for_scenes).read_text())
+        layout = state["fixtures"]
+        identities = {"initial_state_sha256": state["initial_state_sha256"],
+                      "fixtures_sha256": fixture_sha256(layout)}
+        try:
+            if identities["fixtures_sha256"] != state["fixtures_sha256"]:
+                raise ValueError("Fixture layout differs from the original export")
+            for attempt in range(3):
+                env = None
+                try:
+                    env = MotrixEnv(scene, template, case_output, layout,
+                                    camera_enabled=not (args.replay and args.no_video),
+                                    physics_solver=args.motrix_solver)
+                    obs = env.set_init_state(state["joints"], state.get("osc_reset"), legacy=args.legacy_osc_reset)
+                except BaseException as error:
+                    if env is not None:
+                        env.close()
+                    if not isinstance(error, CameraStartupError) or attempt == 2:
+                        raise
+                    print(f"Task {index} state {case}: retrying renderer before inference ({error})",
+                          flush=True)
+                    time.sleep(2 ** attempt)
+                else:
+                    break
+            try:
+                if client:
+                    if args.policy_rng_source is None:
+                        client.call("reset")
+                    else:
+                        client.call("reset", int(index), case)
+                    result = rollout(env, client, obs, args.max_steps,
+                                     case_output, not args.no_video, compact=args.compact)
+                else:
+                    result = replay_actions(env, source, case_output, not args.no_video)
+            finally:
+                env.close()
+        except BaseException as error:
+            write_json(case_output / "result.json",
+                       {"termination": "error", "error": str(error), **identities})
+            raise
+        result["osc_reset_source"] = env.osc_reset_source
+        if hasattr(env, "camera_asset_warmup_seconds"):
+            result["camera_asset_warmup_seconds"] = env.camera_asset_warmup_seconds
+            result["camera_startup_retries"] = attempt
+        write_json(case_output / "result.json", {**result, **identities})
+        print(f"Task {index} state {case}: {result['termination']} "
+              f"at step {result['steps']}", flush=True)
+
+    sender.send((client.sequence if client is not None else None,
+                 random.getstate(), np.random.get_state()))
+    sender.close()
 
 
 def replay_actions(env, source, output, video):
@@ -326,6 +385,8 @@ def main():
     parser.add_argument("--manifest", type=Path)
     parser.add_argument("--tasks", type=int, nargs="+", default=[2])
     parser.add_argument("--episodes", type=int, default=1)
+    parser.add_argument("--episodes-per-process", type=int, default=3,
+                        help="Recycle the MotrixSim process after this many episodes; the suite policy persists")
     parser.add_argument("--suite", choices=SUITE_LIMITS, default="libero_spatial")
     parser.add_argument("--max-steps", type=int)
     parser.add_argument("--gpu", type=int, default=0)
@@ -350,6 +411,8 @@ def main():
         args.max_steps = SUITE_LIMITS[args.suite]
     if not 1 <= args.episodes <= 50 or not 1 <= args.max_steps <= SUITE_LIMITS[args.suite]:
         parser.error("Episode count or horizon outside suite protocol")
+    if args.episodes_per_process < 1:
+        parser.error("--episodes-per-process must be positive")
     if args.wait_for_scenes < 0:
         parser.error("--wait-for-scenes must be nonnegative")
     if not set(args.tasks) <= set(range(10)) or len(args.tasks) != len(set(args.tasks)):
