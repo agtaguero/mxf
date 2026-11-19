@@ -1,0 +1,7 @@
+motrixsim==0.10.1
+motrixsim-core==0.10.1
+numpy==2.5.5
+imageio==2.38.2
+imageio-ffmpeg==0.8.1
+pillow==13.0.0
+absl-py==2.1.0
