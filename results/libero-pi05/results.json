@@ -1,0 +1,623 @@
+{
+  "protocol": "libero-vla-default.v1",
+  "model_manifest_sha256": "35b95db05ad0375d5f556d153185a7c2da0ceddbd9e3471353187936a5247328",
+  "reference_execution": "lbr-f1cf7604e59e4be4b9dd387a820f9e29",
+  "weights_sha256": "0b08a9084a08e7ca9f77a4d21e9816cce3c3e015e6788f11dc7a224f12ab7d79",
+  "checkpoint_source": {
+    "repository": "gs://openpi-assets/checkpoints/pi05_libero",
+    "revision": "62daf267a6bec200bfaffee0c5103c6acda1c1c1807cba7e93965c91db7521c9",
+    "source_revision": "215abfb217dbac7d5f1273282331b9b1866c0479"
+  },
+  "policy_runtime_sha256": "9a2f1c22d8c4e3183111fce5cb53d140e572808da5ec1ffdc0499d15fdcdf219",
+  "protocol_settings": {
+    "policy_seed": 7,
+    "environment_seed": 0,
+    "physics_dt": 0.002,
+    "control_hz": 20,
+    "warmup_steps": 10,
+    "action_queue": 5,
+    "camera_resolution": [
+      256,
+      256
+    ],
+    "episodes_per_task": 50,
+    "inference_order": "serial_task_episode_action",
+    "solver_override": null,
+    "engine": "motrixsim",
+    "reference_engine": "mujoco",
+    "original_collision_geometry": true
+  },
+  "episodes": 2000,
+  "successes": 1839,
+  "reference_successes": 1927,
+  "suites": {
+    "libero_spatial": {
+      "tasks": [
+        {
+          "task_index": 0,
+          "task": "libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "d5600d71258dd1b4ad4cdf235b5a5cbf4e8ad111534506b87ad3f00437fe30e5"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 1,
+          "task": "libero_spatial/pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl next to the ramekin and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "ee7855a716da899ca1a031da65d90cd538a9754d04e19ec314c39a5fbbcde5a3"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 2,
+          "task": "libero_spatial/pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl from table center and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "602f14697bcdb746648d4705713cc1f4d80d217e5a7beca93d5b2f402b6feff9"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 3,
+          "task": "libero_spatial/pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl on the cookie box and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "3b964edf0aeb37b6ad16ea2cff270d463ffe6b273ddb3323af95dbe37cbd6855"
+          },
+          "successes": 47,
+          "reference_successes": 49
+        },
+        {
+          "task_index": 4,
+          "task": "libero_spatial/pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "1911ac320d22f904430ed81fe13fedc6eee6d89a9f324417d8acfaff51038f4c"
+          },
+          "successes": 46,
+          "reference_successes": 48
+        },
+        {
+          "task_index": 5,
+          "task": "libero_spatial/pick_up_the_black_bowl_on_the_ramekin_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl on the ramekin and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "43e4bbe1e56c283f43e7d292230b4058e9c919874ce75e733c026a516bfc3784"
+          },
+          "successes": 33,
+          "reference_successes": 46
+        },
+        {
+          "task_index": 6,
+          "task": "libero_spatial/pick_up_the_black_bowl_next_to_the_cookie_box_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl next to the cookie box and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "edf5dd6998332cc5da79d29479eebd2421dbfa7547af6e7a5824ce8749326921"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 7,
+          "task": "libero_spatial/pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl on the stove and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "8920bd430b99fbd6d35f707263042a124ac8766247bd2dc77add8082760ed012"
+          },
+          "successes": 37,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 8,
+          "task": "libero_spatial/pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl next to the plate and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "07ed9dcf5841664f356b76d12bb8d25b8fa9b9a0dbe23254c52f78349577d3e1"
+          },
+          "successes": 49,
+          "reference_successes": 49
+        },
+        {
+          "task_index": 9,
+          "task": "libero_spatial/pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate",
+          "instruction": "pick up the black bowl on the wooden cabinet and place it on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "099ae830d08bd04e6d9a8b09fb0b3a1d7c5390a4185371014102060e9a6feba2",
+            "scene.json": "5cb971346b7fb944b13b7c211d6f8356ea10fe4f41cf5763b84a5eaccd6e887d"
+          },
+          "successes": 48,
+          "reference_successes": 48
+        }
+      ],
+      "episodes": 500,
+      "successes": 460,
+      "reference_successes": 490,
+      "paired_outcomes": {
+        "both_success": 455,
+        "motrix_only": 5,
+        "reference_only": 35,
+        "both_timeout": 5
+      },
+      "policy_summary": {
+        "boundary": "libero-raw256-suite.v1",
+        "algorithm_resets": 500,
+        "action_batches": 55942,
+        "model_forwards": 11386,
+        "inference_order": "serial_task_episode_action",
+        "policy_seed": 7,
+        "policy_seeded_once": true
+      },
+      "max_steps": 220,
+      "native_result_sha256": "cc40e0cdc549a510bdf1e5fdee8fd00b52bf73cffee6a956dd9c4a01029e5380",
+      "motrixsim_version": "0.10.1",
+      "episodes_per_simulation_process": 3,
+      "weights_sha256": "0b08a9084a08e7ca9f77a4d21e9816cce3c3e015e6788f11dc7a224f12ab7d79"
+    },
+    "libero_object": {
+      "tasks": [
+        {
+          "task_index": 0,
+          "task": "libero_object/pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+          "instruction": "pick up the alphabet soup and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "ead06f18f7610d98830d7601f9e0a93ea5660b75dc1c90e52217eb584235fc5f",
+            "scene.json": "2bb94def0842248b0b5a1b85fbc29a75d11ff5aa29e21412d309fc418bc0db3b"
+          },
+          "successes": 44,
+          "reference_successes": 49
+        },
+        {
+          "task_index": 1,
+          "task": "libero_object/pick_up_the_cream_cheese_and_place_it_in_the_basket",
+          "instruction": "pick up the cream cheese and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "3b9f898d66a31d11953d47ad6601c915779d4f7e9311b0d1e8ea47916e59fb67",
+            "scene.json": "83a1258286e36905ff1e816c6b7b50e4e72f937a5730bee57979517c0be2e994"
+          },
+          "successes": 47,
+          "reference_successes": 49
+        },
+        {
+          "task_index": 2,
+          "task": "libero_object/pick_up_the_salad_dressing_and_place_it_in_the_basket",
+          "instruction": "pick up the salad dressing and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "01bf82bb753aa9dfa317162e20f8aa6b3fe7dcb110c9c3735862fb43c7b60b8d",
+            "scene.json": "d1253fc5537d657fd07c0188fcc862588e494b081e56c80c2da95af7f6048459"
+          },
+          "successes": 49,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 3,
+          "task": "libero_object/pick_up_the_bbq_sauce_and_place_it_in_the_basket",
+          "instruction": "pick up the bbq sauce and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "9c5996540d31c6b3eb444dfad4a3e2f2ca589e7927946e9002a011afe2c0773b",
+            "scene.json": "6e4036b4756a8916445d683d172df262610fb9de5b6cce6dcb86837b2a92631a"
+          },
+          "successes": 50,
+          "reference_successes": 49
+        },
+        {
+          "task_index": 4,
+          "task": "libero_object/pick_up_the_ketchup_and_place_it_in_the_basket",
+          "instruction": "pick up the ketchup and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "bd905324d30055682ed5661c7209fbdfe9c6d1907e0fef15522725d811fdb2dd",
+            "scene.json": "e491ab1801f83dd47b0a476027edc92a17fba3aa32ecafa52e40ebeba319e011"
+          },
+          "successes": 49,
+          "reference_successes": 47
+        },
+        {
+          "task_index": 5,
+          "task": "libero_object/pick_up_the_tomato_sauce_and_place_it_in_the_basket",
+          "instruction": "pick up the tomato sauce and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "22084184a252f09aa7ac47766dbb8c2af04836748eb016888746598b097192e2",
+            "scene.json": "29c82ff7b538555c34a92a6bcfe4fcac986979b0967a2a89388466c4aaf01f24"
+          },
+          "successes": 48,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 6,
+          "task": "libero_object/pick_up_the_butter_and_place_it_in_the_basket",
+          "instruction": "pick up the butter and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "029261bcce2b0cbdc48d38d22b370ca6cd377d0f5f290bcade02c1507c5c7d4b",
+            "scene.json": "cec71047806cef308299163787a48c26c1668c500a159036f83d7a3a80886bbb"
+          },
+          "successes": 49,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 7,
+          "task": "libero_object/pick_up_the_milk_and_place_it_in_the_basket",
+          "instruction": "pick up the milk and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "f3e082040e869a1d5e4f30267e17d80d5760ce760d96b1bab6e3e2b546f3aa02",
+            "scene.json": "feacaac52e5ef2ef354781310e5c900cd056009653fe15f1a4ff93c1cb99fa33"
+          },
+          "successes": 49,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 8,
+          "task": "libero_object/pick_up_the_chocolate_pudding_and_place_it_in_the_basket",
+          "instruction": "pick up the chocolate pudding and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "f7a49804a98681dcc31c712e1ac7e91ec4b808b447df0c33dfc29e08779c1077",
+            "scene.json": "5445dfa8a6a93d16e47e89c20d942154465d553d26cf8c9e6701bab73f370334"
+          },
+          "successes": 48,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 9,
+          "task": "libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket",
+          "instruction": "pick up the orange juice and place it in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "054007d861c286236bf7c4b5113ce257ff39912abb7d3e34dc9502da60a53048",
+            "scene.json": "fc8cdbb0c2c3757e755ca209b8bcb3f670202eeb3b7e7c022b209bd35e0ac773"
+          },
+          "successes": 50,
+          "reference_successes": 48
+        }
+      ],
+      "episodes": 500,
+      "successes": 483,
+      "reference_successes": 492,
+      "paired_outcomes": {
+        "both_success": 475,
+        "motrix_only": 8,
+        "reference_only": 17,
+        "both_timeout": 0
+      },
+      "policy_summary": {
+        "boundary": "libero-raw256-suite.v1",
+        "algorithm_resets": 500,
+        "action_batches": 73610,
+        "model_forwards": 14917,
+        "inference_order": "serial_task_episode_action",
+        "policy_seed": 7,
+        "policy_seeded_once": true
+      },
+      "max_steps": 280,
+      "native_result_sha256": "f3e24c8fc13f4c2d6e907d79c5213af023ddf342e5b67402ebc3cfc0eddb7936",
+      "motrixsim_version": "0.10.1",
+      "episodes_per_simulation_process": 3,
+      "weights_sha256": "0b08a9084a08e7ca9f77a4d21e9816cce3c3e015e6788f11dc7a224f12ab7d79"
+    },
+    "libero_goal": {
+      "tasks": [
+        {
+          "task_index": 0,
+          "task": "libero_goal/open_the_middle_drawer_of_the_cabinet",
+          "instruction": "open the middle drawer of the cabinet",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "5dbe261e6fc903a1539e6842a1bb695090540faa83ed63ed71f424ac6ed1ca59"
+          },
+          "successes": 50,
+          "reference_successes": 48
+        },
+        {
+          "task_index": 1,
+          "task": "libero_goal/put_the_bowl_on_the_stove",
+          "instruction": "put the bowl on the stove",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "9dbf252625234777544ea0243a7bebd85bb7b9c66e463831199b6d5645488a3f"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 2,
+          "task": "libero_goal/put_the_wine_bottle_on_top_of_the_cabinet",
+          "instruction": "put the wine bottle on top of the cabinet",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "fc507b484ac2ccbe7ec7e803c43edbfa606b29e5c28b3e76729e33cc475bef1e"
+          },
+          "successes": 50,
+          "reference_successes": 48
+        },
+        {
+          "task_index": 3,
+          "task": "libero_goal/open_the_top_drawer_and_put_the_bowl_inside",
+          "instruction": "open the top drawer and put the bowl inside",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "bc84835ac78cfedc41380c898b2847f60ef995301a2cd481306418f7cf12def3"
+          },
+          "successes": 42,
+          "reference_successes": 45
+        },
+        {
+          "task_index": 4,
+          "task": "libero_goal/put_the_bowl_on_top_of_the_cabinet",
+          "instruction": "put the bowl on top of the cabinet",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "45587f2d693790df2c6f837292a3d344e23a9d4e7e0c4a2b06e9c9aa521bb6ea"
+          },
+          "successes": 50,
+          "reference_successes": 48
+        },
+        {
+          "task_index": 5,
+          "task": "libero_goal/push_the_plate_to_the_front_of_the_stove",
+          "instruction": "push the plate to the front of the stove",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "06005831033532ff2d846d3341a425a4ec9333ae6fca4150a38a4f2eadc88c32"
+          },
+          "successes": 19,
+          "reference_successes": 47
+        },
+        {
+          "task_index": 6,
+          "task": "libero_goal/put_the_cream_cheese_in_the_bowl",
+          "instruction": "put the cream cheese in the bowl",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "a523b31ef022333deabdd02bfd5da4454fd6352496fc2489cc38617a69572876"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 7,
+          "task": "libero_goal/turn_on_the_stove",
+          "instruction": "turn on the stove",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "fd0ab51a4ca93157928435ba1412ba2b08e80906f702b9c8e7fed76147fd6129"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 8,
+          "task": "libero_goal/put_the_bowl_on_the_plate",
+          "instruction": "put the bowl on the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "384efe5046aab03d23cfe315363a724956a92cdca4f4d1172a8460c030b02b25"
+          },
+          "successes": 50,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 9,
+          "task": "libero_goal/put_the_wine_bottle_on_the_rack",
+          "instruction": "put the wine bottle on the rack",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "6854d415f91869774db31a6f0ba0ae9edbd854268c9198e628c05a373b8d3208",
+            "scene.json": "ff2203b7607fd7cdc15a4d874c1763a393b6b93f0076915a3fd9eeb712231d07"
+          },
+          "successes": 47,
+          "reference_successes": 48
+        }
+      ],
+      "episodes": 500,
+      "successes": 458,
+      "reference_successes": 484,
+      "paired_outcomes": {
+        "both_success": 448,
+        "motrix_only": 10,
+        "reference_only": 36,
+        "both_timeout": 6
+      },
+      "policy_summary": {
+        "boundary": "libero-raw256-suite.v1",
+        "algorithm_resets": 500,
+        "action_batches": 62428,
+        "model_forwards": 12668,
+        "inference_order": "serial_task_episode_action",
+        "policy_seed": 7,
+        "policy_seeded_once": true
+      },
+      "max_steps": 300,
+      "native_result_sha256": "23c8898adc143d7351def2c759158c3b9afe7a7d6283f6b5463bc19e36165306",
+      "motrixsim_version": "0.10.1",
+      "episodes_per_simulation_process": 3,
+      "weights_sha256": "0b08a9084a08e7ca9f77a4d21e9816cce3c3e015e6788f11dc7a224f12ab7d79"
+    },
+    "libero_10": {
+      "tasks": [
+        {
+          "task_index": 0,
+          "task": "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket",
+          "instruction": "put both the alphabet soup and the tomato sauce in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "5eaae44317691ba27551406348003f8c9b662b2bcfaebdf0b20291e3193bfd07",
+            "scene.json": "30804c83f8e368bcab6bc254bf680e42fa35723174b600170ee9feed634764cb"
+          },
+          "successes": 43,
+          "reference_successes": 48
+        },
+        {
+          "task_index": 1,
+          "task": "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket",
+          "instruction": "put both the cream cheese box and the butter in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "5eaae44317691ba27551406348003f8c9b662b2bcfaebdf0b20291e3193bfd07",
+            "scene.json": "4a157ec4820c2232587732df6c06fda592c3f91f55b144817e5b5aaf51cae7c9"
+          },
+          "successes": 48,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 2,
+          "task": "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it",
+          "instruction": "turn on the stove and put the moka pot on it",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "c4f629b5598a454cbd25a2a72dcabd71ee8aa237503df66d3938125d95568006",
+            "scene.json": "d32064d3c3c50a8976466441df9287db586b68db216445cb1f4266532c9b279d"
+          },
+          "successes": 49,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 3,
+          "task": "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+          "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "58460244a6df728f3a29350be8cc355fc4a3aebe07b1169b22d4503a5c23c235",
+            "scene.json": "bde3b8f72a2c0ad8fcd833345127de259663ae3b3de23935c8df497c1ef7ab1e"
+          },
+          "successes": 44,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 4,
+          "task": "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate",
+          "instruction": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "2ddac434fd3b3e926de232e03f21a8ceed78d41126e5766c72589ea297da9e9a",
+            "scene.json": "7e96e286b8560cc1bfa1d0560fbae2f7d24ec3dee8c2c065f368794a840dba24"
+          },
+          "successes": 48,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 5,
+          "task": "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy",
+          "instruction": "pick up the book and place it in the back compartment of the caddy",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "48f0c033f16bb9c9dfb02cca0ac32b95413e96af912bb80ffbb774a6ebe0ff1e",
+            "scene.json": "1be602550f3540543c83f3732635517f3e185492686d8dd99bd776204f1208f0"
+          },
+          "successes": 48,
+          "reference_successes": 46
+        },
+        {
+          "task_index": 6,
+          "task": "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate",
+          "instruction": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "5bf011f26c2a45fd54745ec4d2cbb34bbeb2b5354793bba8e9d4bef7cdd515ff",
+            "scene.json": "a5544920232b4bf1e25c9401bcdeb169efb68d4d307fbda4ee4baf8aaf0d1c29"
+          },
+          "successes": 44,
+          "reference_successes": 45
+        },
+        {
+          "task_index": 7,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket",
+          "instruction": "put both the alphabet soup and the cream cheese box in the basket",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "c39fec1073431e790bb0b9dfca72a71e58263ef7630f9fa13123b28fde0cfec1",
+            "scene.json": "9ed4b5a0b1c4ccf6f403d2fbe968777ec44a4a0dbfed1b5c3b3735c0fd653b1d"
+          },
+          "successes": 46,
+          "reference_successes": 50
+        },
+        {
+          "task_index": 8,
+          "task": "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove",
+          "instruction": "put both moka pots on the stove",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "dc734c48f3ccc5a57b607ac3f402329ca8f459244f5a7d9b3eba476541d0f0e3",
+            "scene.json": "31d8c3b8b8b73d73e6e4055cd3a112b9441d5233dbf707c0913c1e4a38bfef9b"
+          },
+          "successes": 24,
+          "reference_successes": 26
+        },
+        {
+          "task_index": 9,
+          "task": "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it",
+          "instruction": "put the yellow and white mug in the microwave and close it",
+          "episodes": 50,
+          "scene_sha256": {
+            "scene.xml": "370a8007972e4c3289cbf7e1e5e2356beecd60701a4c152fd70267299efa225a",
+            "scene.json": "ef661083555e7be3b556f906b3a1869343ebbe397578d9ad15557e94e4d3bd19"
+          },
+          "successes": 44,
+          "reference_successes": 46
+        }
+      ],
+      "episodes": 500,
+      "successes": 438,
+      "reference_successes": 461,
+      "paired_outcomes": {
+        "both_success": 417,
+        "motrix_only": 21,
+        "reference_only": 44,
+        "both_timeout": 18
+      },
+      "policy_summary": {
+        "boundary": "libero-raw256-suite.v1",
+        "algorithm_resets": 500,
+        "action_batches": 146313,
+        "model_forwards": 29439,
+        "inference_order": "serial_task_episode_action",
+        "policy_seed": 7,
+        "policy_seeded_once": true
+      },
+      "max_steps": 520,
+      "native_result_sha256": "be72a6fb551cd8dd8d14a473bd72ab4483dc3a4b38f3a0ebd7fb056843484d3e",
+      "motrixsim_version": "0.10.1",
+      "episodes_per_simulation_process": 3,
+      "weights_sha256": "0b08a9084a08e7ca9f77a4d21e9816cce3c3e015e6788f11dc7a224f12ab7d79"
+    }
+  }
+}
